@@ -31,7 +31,9 @@
       "plugin:vue/essential",
       "@vue/standard"
     ],
-    "rules": {},
+    "rules": {
+      "semi" : "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
