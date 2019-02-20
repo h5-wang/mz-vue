@@ -15,9 +15,12 @@ import Cinema from './views/Cinema.vue';
 import Center from './views/Center.vue';
 import City from './views/City.vue';
 import Home from './views/Home.vue';
+import Detail from './views/Detail.vue';
 
 Vue.use(VueRouter); // 这个方法会调用 vueRouter 的 install 方法，而 install 方法里面就有做全局配置，所以路由可以在全局使用，而且不用注册
 let router = new VueRouter({
+  mode: 'history',
+
   //  路由对照表   url ->  视图组件
   /** localhost:8080/#/Fmles    ->  Fimles.vue
    * localhost:8080/#/Cinema    ->  Cinema.vue
@@ -25,6 +28,7 @@ let router = new VueRouter({
    */
   routes: [
     { // path 路径定义为 '/' 的话，二级路由追加上来的地址就可以省略一个 '/'
+      // 主页
       path: '/',
       component: Home,
       children: [
@@ -35,7 +39,7 @@ let router = new VueRouter({
          */
         {
           path: 'Fimles', // 就是 url 的路径
-          component: Fimles
+          component: Fimles // 所要渲染的组件
         },
         // localhost：8080/#/cinema
         {
@@ -55,9 +59,14 @@ let router = new VueRouter({
         }
       ]
     },
-    {
+    {// 城市选择页
+      name: 'hhh',
       path: '/city',
       component: City
+    },
+    {
+      path: '/detail/:id',
+      component: Detail
     },
     {
       path: '*',
