@@ -6,7 +6,7 @@
     <router-link to="/cinema" active-class="a">
       <i class="iconfont icon-dianying"></i>影院
     </router-link>
-    <router-link to="center" active-class="a">
+    <router-link to="/center" active-class="a">
       <i class="iconfont icon-gerenzhongxin"></i>个人中心
     </router-link>
   </footer>

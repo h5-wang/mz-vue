@@ -12,7 +12,9 @@ import Vue from 'vue'; // 因为第三步需要用到 vue 的实例方法，所�
 import VueRouter from 'vue-router';
 import Fimles from './views/Fimles.vue';
 import Cinema from './views/Cinema.vue';
-import Center from './views/Center.vue'
+import Center from './views/Center.vue';
+import City from './views/City.vue';
+import Home from './views/Home.vue';
 
 Vue.use(VueRouter); // 这个方法会调用 vueRouter 的 install 方法，而 install 方法里面就有做全局配置，所以路由可以在全局使用，而且不用注册
 let router = new VueRouter({
@@ -22,18 +24,61 @@ let router = new VueRouter({
    * localhost:8080/#/Center    ->  Center.vue
    */
   routes: [
-    {
-      path: '/Fimles', // 就是 url 的路径
-      component: Fimles
+    { // path 路径定义为 '/' 的话，二级路由追加上来的地址就可以省略一个 '/'
+      path: '/',
+      component: Home,
+      children: [
+        // 不是一级路由的话，path中的路径不加 '/'
+        /**
+         * 二级或二级以上的路由，它们的url地址是在一级路由的基础上追加的
+         * localhost：8080/#/fimles
+         */
+        {
+          path: 'Fimles', // 就是 url 的路径
+          component: Fimles
+        },
+        // localhost：8080/#/cinema
+        {
+          path: 'Cinema',
+          component: Cinema
+        },
+        // localhost：8080/#/center
+        {
+          path: 'Center',
+          component: Center
+        },
+        {
+          // 重定向  localhost：8080/#/   定向到    lcoalhost：8080/#/fimles
+          path: '',
+          // component: Fimles
+          redirect: '/fimles'
+        }
+      ]
     },
     {
-      path: '/Cinema',
-      component: Cinema
+      path: '/city',
+      component: City
     },
     {
-      path: '/Center',
-      component: Center
+      path: '*',
+      redirect: '/fimles'
     }
+    // {
+    //   path: '/Fimles', // 就是 url 的路径
+    //   component: Fimles
+    // },
+    // {
+    //   path: '/Cinema',
+    //   component: Cinema
+    // },
+    // {
+    //   path: '/Center',
+    //   component: Center
+    // },
+    // {
+    //   path: '/City',
+    //   component: City
+    // }
   ]
 })
 
