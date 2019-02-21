@@ -62,12 +62,24 @@ let router = new VueRouter({
     {// 城市选择页
       name: 'hhh',
       path: '/city',
-      component: City
+      // 别名
+      alias: '/abc',
+      // component: City
+      components: {
+        top: City,
+        default: Detail
+      }
     },
     {
       path: '/detail/:id',
-      component: Detail
+      component: Detail,
+      // props: true
+      props: {
+        name: '张三',
+        age: 19
+      }
     },
+    // 设置一个通配符的 一级路由，当url地址无法与上面的规则匹配的时候，就会和它匹配
     {
       path: '*',
       redirect: '/fimles'

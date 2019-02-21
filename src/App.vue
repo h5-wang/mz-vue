@@ -1,5 +1,8 @@
 <template>
-    <router-view></router-view>
+  <div>
+      <router-view name="top"></router-view>
+      <router-view ></router-view>
+  </div>
     <!-- <div>
         放置一个坑，后面页面且切换（路由的切换）就会按照路由配置表的内容去渲染这个坑的内容
         <router-view></router-view>
