@@ -10,16 +10,16 @@
 
 import Vue from 'vue'; // 因为第三步需要用到 vue 的实例方法，所以要引入 vue
 import VueRouter from 'vue-router';
-import Fimles from './views/Fimles.vue';
-import Cinema from './views/Cinema.vue';
-import Center from './views/Center.vue';
-import City from './views/City.vue';
-import Home from './views/Home.vue';
-import Detail from './views/Detail.vue';
-import Login from './views/login.vue';
-import Card from './views/Card.vue';
-import Money from './views/Money.vue';
-import System from './views/System.vue';
+// import Fimles from './views/Fimles.vue';
+// import Cinema from './views/Cinema.vue';
+// import Center from './views/Center.vue';
+// import City from './views/City.vue';
+// import Home from './views/Home.vue';
+// import Detail from './views/Detail.vue';
+// import Login from './views/login.vue';
+// import Card from './views/Card.vue';
+// import Money from './views/Money.vue';
+// import System from './views/System.vue';
 
 // 引入顶部滚动条
 import Nprogress from 'nprogress';
@@ -30,6 +30,12 @@ Nprogress.configure({ showSpinner: false });
 Vue.use(VueRouter); // 这个方法会调用 vueRouter 的 install 方法，而 install 方法里面就有做全局配置，所以路由可以在全局使用，而且不用注册
 let router = new VueRouter({
   mode: 'hash',
+  scrollBehavior (to, from, savedPosition) {
+    return {
+      x: 0,
+      y: 0
+    }
+  },
 
   //  路由对照表   url ->  视图组件
   /** localhost:8080/#/Fmles    ->  Fimles.vue
@@ -40,7 +46,7 @@ let router = new VueRouter({
     { // path 路径定义为 '/' 的话，二级路由追加上来的地址就可以省略一个 '/'
       // 主页
       path: '/',
-      component: Home,
+      component: () => import(/* webpackChunkName: "hahahahh" */ './views/Home.vue'),
       children: [
         // 不是一级路由的话，path中的路径不加 '/'
         /**
@@ -49,17 +55,17 @@ let router = new VueRouter({
          */
         {
           path: 'Fimles', // 就是 url 的路径
-          component: Fimles // 所要渲染的组件
+          component: () => import(/* webpackChunkName: "23333333" */ './views/Fimles.vue') // 所要渲染的组件
         },
         // localhost：8080/#/cinema
         {
           path: 'Cinema',
-          component: Cinema
+          component: () => import('./views/Cinema.vue')
         },
         // localhost：8080/#/center
         {
           path: 'Center',
-          component: Center
+          component: () => import('./views/Center.vue')
         },
         {
           // 重定向  localhost：8080/#/   定向到    lcoalhost：8080/#/fimles
@@ -74,36 +80,36 @@ let router = new VueRouter({
       path: '/city',
       // 别名
       alias: '/abc',
-      // component: City
-      components: {
-        top: City,
-        default: Detail
-      }
+      component: () => import('./views/City.vue')
+      // components: {
+      //   top: City,
+      //   default: Detail
+      // }
     },
     {
       path: '/detail/:id',
-      component: Detail,
+      component: () => import('./views/Detail.vue')
       // props: true
-      props: {
-        name: '张三',
-        age: 19
-      }
+      // props: {
+      //   name: '张三',
+      //   age: 19
+      // }
     },
     {
       path: '/card',
-      component: Card
+      component: () => import('./views/Card.vue')
     },
     {
       path: '/money',
-      component: Money
+      component: () => import('./views/Money.vue')
     },
     {
       path: '/system',
-      component: System
+      component: () => import('./views/System.vue')
     },
     {
       path: '/login',
-      component: Login
+      component: () => import('./views/Login.vue')
     },
     // 设置一个通配符的 一级路由，当url地址无法与上面的规则匹配的时候，就会和它匹配
     {

@@ -8,6 +8,7 @@
       <router-link tag="li" to="/detail/300">喜剧之王</router-link>
     </ul>
     <button @click='goCity'>跳转至城市选择页面</button>
+    <div id="box"></div>
   </div>
 </template>
 
@@ -45,3 +46,9 @@ export default {
   }
 }
 </script>
+
+<style lang="less">
+  #box{
+    height: 1000px;
+  }
+</style>
