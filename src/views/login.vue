@@ -35,6 +35,7 @@ export default {
           // this.$router.push({
           //   path: this.$route.query.redirect
           // })
+          // 使用 replace 代替 push login登录页面不会重复出现
           this.$router.replace({
             path: this.$route.query.redirect
           })
