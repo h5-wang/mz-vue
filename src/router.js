@@ -17,6 +17,9 @@ import City from './views/City.vue';
 import Home from './views/Home.vue';
 import Detail from './views/Detail.vue';
 import Login from './views/login.vue';
+import Card from './views/Card.vue';
+import Money from './views/Money.vue';
+import System from './views/System.vue';
 
 // 引入顶部滚动条
 import Nprogress from 'nprogress';
@@ -87,67 +90,16 @@ let router = new VueRouter({
       }
     },
     {
-      path: '/card/:id',
-      component: {
-        render (h) {
-          var that = this;
-          return h('div', [
-            '卖座卡页面',
-            h('button', {
-              on: {
-                click: function () {
-                  console.log('我被点击了');
-                  that.reload();
-                }
-              }
-            }, [
-              '我的天',
-              h('span', '我是一个标签')
-            ])
-          ])
-        },
-        methods: {
-          reload () {
-            console.log('我被执行了');
-            router.push('/card/李四');
-          }
-        },
-        // 组件内的路由守卫函数
-        beforeRouteEnter (to, from, next) {
-          console.log('Enter');
-          next();
-        },
-        // 只会在页面使用了路由参数的时候才会被触发  /card/100  ->  /card/200
-        beforeRouteUpdate (to, from, next) {
-          console.log('Update');
-          next();
-        },
-        beforeRouteLeave (to, from, next) {
-          console.log('Leave');
-          next();
-        }
-      }
-      // 路由独自享有的钩子函数 使用时需要关掉全局前置守卫和后置守卫
-      // beforeEnter (to, from, next) {
-      //   // 设置false 会导致路由被拦截，无法进入 card 页面
-      //   next(false);
-      // }
+      path: '/card',
+      component: Card
     },
     {
       path: '/money',
-      component: {
-        render (h) {
-          return h('div', '余额页面')
-        }
-      }
+      component: Money
     },
     {
       path: '/system',
-      component: {
-        render (h) {
-          return h('div', '设置页面')
-        }
-      }
+      component: System
     },
     {
       path: '/login',
@@ -158,22 +110,6 @@ let router = new VueRouter({
       path: '*',
       redirect: '/fimles'
     }
-    // {
-    //   path: '/Fimles', // 就是 url 的路径
-    //   component: Fimles
-    // },
-    // {
-    //   path: '/Cinema',
-    //   component: Cinema
-    // },
-    // {
-    //   path: '/Center',
-    //   component: Center
-    // },
-    // {
-    //   path: '/City',
-    //   component: City
-    // }
   ]
 })
 
@@ -185,25 +121,30 @@ let router = new VueRouter({
   from  从哪里来的路由的路由对象    b
   next  是否允许去       next() 允许    next（false）  不允许（或则不使用next）
 */
-/*
+
 router.beforeEach((to, from, next) => {
   // 调用 Nprogress 的 start 方法
   Nprogress.start();
-
-  if (to.path === '/card' || to.path === '/money' || to.path === '/system') {
+  // 路由拦截应该有个前提是没有登录，通过登录之后保存的 nickName 来判断
+  let nickName = sessionStorage.getItem('nickName')
+  let list = ['/card', '/money', '/system'];
+  if ((list.indexOf(to.path) > -1) && !nickName) {
     // next(false);
     // next('/login');  字符串模式
     next({
       // 对象模式
-      path: '/login'
+      path: '/login',
+      query: {
+        redirect: to.fullPath
+      }
     })
   } else {
     next();
   }
 })
-*/
+
 // 全局后置守卫
-// router.afterEach((to, from, next) => {
-//   Nprogress.done();
-// })
+router.afterEach((to, from, next) => {
+  Nprogress.done();
+})
 export default router;
