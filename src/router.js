@@ -80,7 +80,7 @@ let router = new VueRouter({
       path: '/city',
       // 别名
       alias: '/abc',
-      component: () => import('./views/City.vue')
+      component: () => import('./views/City/index.vue')
       // components: {
       //   top: City,
       //   default: Detail
